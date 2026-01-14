@@ -1,4 +1,4 @@
-public class CountryLayerSrv {
+public with sharing class CountryLayerSrv {
     /*
      @description: updates/inserts country records based on the API response
     */
