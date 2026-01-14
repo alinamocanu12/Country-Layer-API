@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Owner_Change_Incomplete_Details</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+  NOT(ISNEW()),
+  ISCHANGED(OwnerId),
+  OR(
+    AND(
+      $Profile.Name = &quot;System Administrator&quot;,
+      ISBLANK(TEXT(LeadSource))
+    ),
+    AND(
+      $Profile.Name = &quot;Contract Manager&quot;,
+      OR(
+        ISBLANK(TEXT(LeadSource)),
+        ISBLANK(Country__c)
+      )
+    ),
+    AND(
+      $Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+      $Profile.Name &lt;&gt; &quot;Contract Manager&quot;,
+      OR(
+        ISBLANK(TEXT(LeadSource)),
+        ISBLANK(Country__c),
+        ISBLANK(TEXT(NumberOfEmployees))
+      )
+    )
+  )
+)</errorConditionFormula>
+    <errorMessage>You cannot change the Lead Owner unless required fields are filled in (Country / Lead Source / No. of Employees, depending on profile).</errorMessage>
+</ValidationRule>
